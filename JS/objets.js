@@ -65,29 +65,29 @@ var joueur = function(id) {
 	
 	this.css = function() {
 		return document.getElementById("joueur_"+this.id.toString());
-	}
+	};
 	
 	this.rotation_gauche = function() {
 		this.angle -= this.vitesse_rotation;
 		this.reset_angle();
-	}
+	};
 	
 	this.rotation_droite = function() {
 		this.angle += this.vitesse_rotation;
 		this.reset_angle();
-	}
+	};
 	
 	this.avancer = function() {
 		this.x += Math.cos((this.angle-90)*(Math.PI/180)) * this.vitesse_deplacement;
 		this.y += Math.sin((this.angle-90)*(Math.PI/180)) * this.vitesse_deplacement;
 		this.test_collision();
-	}
+	};
 	
 	this.reculer = function() {
 		this.x -= Math.cos((this.angle-90)*(Math.PI/180)) * this.vitesse_deplacement;
 		this.y -= Math.sin((this.angle-90)*(Math.PI/180)) * this.vitesse_deplacement;
 		this.test_collision();
-	}
+	};
 	
 	this.reset_angle = function() {
 		
@@ -97,7 +97,7 @@ var joueur = function(id) {
 			this.angle -= 360;
 		}
 		
-	}
+	};
 	
 	this.test_sortie_map = function() {
 		
@@ -113,21 +113,21 @@ var joueur = function(id) {
 			this.y = hauteur;
 		}
 		
-	}
+	};
 	
 	this.test_collision = function() {
 		
-		for(var i = 0;i < devMap.length;i++){
+		for(var i = 0;i < map.length;i++){
 			
-			for(var j = 0;j < devMap[i].faces.length;j++){
+			for(var j = 0;j < map[i].faces.length;j++){
 				
-				var face = devMap[i].faces[j];
+				var face = map[i].faces[j];
 				
-				if( (face.orientation == "vertical") && (this.x < (face.debut["x"] + 6)) && (this.x > (face.debut["x"] - 6)) && (this.y >= face.debut["y"]) && (this.y <= face.fin["y"]) ){
+				if( (face.orientation === "vertical") && (this.x < (face.debut["x"] + 6)) && (this.x > (face.debut["x"] - 6)) && (this.y >= face.debut["y"]) && (this.y <= face.fin["y"]) ){
 					this.x = face.debut["x"];
 				}
 				
-				if( (face.orientation == "horizontal") && (this.y < (face.debut["y"] + 6)) && (this.y > (face.debut["y"] - 6)) && (this.x >= face.debut["x"]) && (this.x <= face.fin["x"]) ){
+				if( (face.orientation === "horizontal") && (this.y < (face.debut["y"] + 6)) && (this.y > (face.debut["y"] - 6)) && (this.x >= face.debut["x"]) && (this.x <= face.fin["x"]) ){
 					this.y = face.debut["y"];
 				}
 				
@@ -135,7 +135,7 @@ var joueur = function(id) {
 			
 		}
 		
-	}
+	};
 	
 	this.tir = function() {
 		
@@ -146,7 +146,7 @@ var joueur = function(id) {
 		}
 	}
 	
-}
+};
 
 var projectile = function(x, y, angle) {
 	
@@ -161,7 +161,7 @@ var projectile = function(x, y, angle) {
 		this.x += Math.cos((this.angle-90)*(Math.PI/180)) * this.vitesse_deplacement;
 		this.y += Math.sin((this.angle-90)*(Math.PI/180)) * this.vitesse_deplacement;
 		this.test_collision();
-	}
+	};
 	
 	this.rebond = function(sens) {
 		
@@ -178,21 +178,21 @@ var projectile = function(x, y, angle) {
 		
 		this.nombre_rebond++;
 		
-	}
+	};
 	
 	this.test_collision = function() {
 		
-		for(var i = 0;i < devMap.length;i++){
+		for(var i = 0;i < map.length;i++){
 			
-			for(var j = 0;j < devMap[i].faces.length;j++){
+			for(var j = 0;j < map[i].faces.length;j++){
 				
-				var face = devMap[i].faces[j];
+				var face = map[i].faces[j];
 				
-				if( (face.orientation == "vertical") && (this.x < (face.debut["x"] + 6)) && (this.x > (face.debut["x"] - 6)) && (this.y >= face.debut["y"]) && (this.y <= face.fin["y"]) ){
+				if( (face.orientation === "vertical") && (this.x < (face.debut["x"] + 6)) && (this.x > (face.debut["x"] - 6)) && (this.y >= face.debut["y"]) && (this.y <= face.fin["y"]) ){
 					this.rebond(face.orientation);
 				}
 				
-				if( (face.orientation == "horizontal") && (this.y < (face.debut["y"] + 6)) && (this.y > (face.debut["y"] - 6)) && (this.x >= face.debut["x"]) && (this.x <= face.fin["x"]) ){
+				if( (face.orientation === "horizontal") && (this.y < (face.debut["y"] + 6)) && (this.y > (face.debut["y"] - 6)) && (this.x >= face.debut["x"]) && (this.x <= face.fin["x"]) ){
 					this.rebond(face.orientation);
 				}
 				
@@ -200,10 +200,10 @@ var projectile = function(x, y, angle) {
 			
 		}
 		
-	}
+	};
 	
 	this.css = function() {
 		return document.getElementById("balle_"+this.id.toString());
 	}
 	
-}
+};

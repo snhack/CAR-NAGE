@@ -20,23 +20,39 @@ devMap[6] = new Mur('horizontal', prct(20,'x'), prct(70, 'y'), prct(80,'x'));
 /* Générateur de map aléatoire */
 
 /*
-TODO : définir les coordonnées de départ possibles pour les murs verticaux et horizontaux
-TODO : à stocker dans les tableaux alea... définis ci-dessous (remplacer par des objets ?)
+TODO : améliorer les règles pour les murs aléatoires
 */
 
 //D'abord les règles (taille couloirs...), et les variables
 var mapAleatoire = [],
-    aleaHorizontalXs = [],
-    aleaHorizontalYs = [],
-    aleaVerticalXs = [],
-    aleaVerticalYs = [],
-    nbMurs = {min:4,max:8},
-    tailleCouloirs = prct(5, 'x');
+    nbMurs = {min:10,max:20},
+    tailleCouloirs = prct(10, 'x'),
+    aleaHorizontal = {x:[],y:[prct(10,'y'),prct(10,'y')+tailleCouloirs],orientation:'horizontal'},
+    aleaVertical = {x:[],y:[],orientation:'vertical'};
 
+
+function coordoPossibles(object) {
+    var temp = prct(0,'x');
+    if(object.orientation === 'vertical') {
+        for(var i = 0; i < 10; i++){
+            temp = tailleCouloirs * i;
+            object.x.push(temp);
+            object.y.push(temp);
+        }
+    } else if (object.orientation === 'horizontal'){
+        for(var j = 0; j < 10; j++){
+            temp = tailleCouloirs * j;
+            object.x.push(temp);
+            object.y.push(temp);
+        }
+    }
+}
 //La fonction de création de la map aléatoire V1
 function creationMapAleatoire() {
     console.log('***Génération de la map aléatoire***');
     mapAleatoire = [];
+    coordoPossibles(aleaHorizontal);
+    coordoPossibles(aleaVertical);
     bordureMap(mapAleatoire);
     for (var i = 4; i < nbAlea(nbMurs.min+4, nbMurs.max+4); i++) {
         var z = nbAlea(1, 2),
@@ -46,18 +62,19 @@ function creationMapAleatoire() {
                 l;
         if (z === 1) {
             orientation = 'vertical';
-            x = aleaVerticalXs[nbAlea(0,aleaVerticalXs.length)];
-            y = aleaVerticalYs[nbAlea(0,aleaVerticalYs.length)];
+            x = aleaVertical.x[nbAlea(0,aleaVertical.x.length)];
+            y = aleaVertical.y[nbAlea(0,aleaVertical.y.length)];
             l = nbAlea(prct(10,'y'), prct(70,'y'));
         } else if (z === 2) {
             orientation = 'horizontal';
-            x = aleaHorizontalXs[nbAlea(0,aleaHorizontalXs.length)];
-            y = aleaHorizontalYs[nbAlea(0,aleaHorizontalYs.length)];
+            x = aleaHorizontal.x[nbAlea(0,aleaHorizontal.x.length)];
+            y = aleaHorizontal.y[nbAlea(0,aleaHorizontal.y.length)];
             l = nbAlea(prct(10,'x'), prct(70,'x'));
         }
         mapAleatoire[i] = new Mur(orientation,x,y,l);
     }
     affichageMurs(mapAleatoire);
+    map = mapAleatoire;
 }
 
 //Pourcentage des longueurs en fonction de l'axe

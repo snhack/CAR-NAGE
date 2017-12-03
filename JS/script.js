@@ -1,6 +1,7 @@
 /* variables globales */
 var hauteur = 800;
 var largeur = 800;
+var map = [];
 
 document.getElementById("background").style.height = hauteur+"px";
 document.getElementById("background").style.width = largeur+"px";
@@ -13,8 +14,8 @@ var vitesse_rotation_standard = 10;
 var delai_tir_standard = 5;
 
 var nombre_joueurs = 0;
-var joueurs = Array();
-var projectiles = Array();
+var joueurs = [];
+var projectiles = [];
 
 
 //On prend le contexte 2d du canvas
@@ -37,6 +38,7 @@ document.getElementById('btnMapAlea').onclick = function () {
 };
 document.getElementById('btnDevMap').onclick = function () {
     affichageMurs(devMap);
+    map = devMap;
 };
 
 
@@ -48,7 +50,7 @@ var touche_droite_standard = [39,68];
 var touche_tir_standard = [18,65];
 
 /* Tableau stockant les touches en cours d'appui */
-var touches = Array();
+var touches = [];
 
 /* A l'appui d'une touche, on l'ajoute dans le tableau */
 document.addEventListener("keydown", function(event){
@@ -65,12 +67,10 @@ document.addEventListener("keyup", function(event){
 }, false);
 
 /* Initialisation, a la fin du chergement du DOM */
-document.addEventListener("DOMContentLoaded", function(event) {
-	
+document.addEventListener("DOMContentLoaded", function() {
+	map = devMap;
 	affichageMurs(devMap);
-	
 	joueurs = [creation_joueur(), creation_joueur()];
-	
 	var run = window.setInterval(maj,25);
 	
 });
