@@ -138,7 +138,8 @@ var projectile = function(x, y, angle) {
 	this.trajectoire = function() {
 		this.x += Math.cos((this.angle-90)*(Math.PI/180)) * this.vitesse_deplacement;
 		this.y += Math.sin((this.angle-90)*(Math.PI/180)) * this.vitesse_deplacement;
-		this.test_sortie_map();
+		this.test_collision();
+		//this.test_sortie_map();
 	}
 	
 	this.rebond = function(sens) {
@@ -184,6 +185,28 @@ var projectile = function(x, y, angle) {
 			this.rebond("horizontal")
 			
 			this.y = hauteur;
+			
+		}
+		
+	}
+	
+	this.test_collision = function() {
+		
+		for(var i = 0;i < devMap.length;i++){
+			
+			for(var j = 0;j < devMap[i].faces.length;j++){
+				
+				var face = devMap[i].faces[j];
+				
+				if( (face.orientation == "vertical") && (this.x < (face.debut["x"] + 5)) && (this.x > (face.debut["x"] - 5)) && (this.y >= face.debut["y"]) && (this.y <= face.fin["y"]) ){
+					this.rebond(face.orientation);
+				}
+				
+				if( (face.orientation == "horizontal") && (this.y < (face.debut["y"] + 5)) && (this.y > (face.debut["y"] - 5)) && (this.x >= face.debut["x"]) && (this.x <= face.fin["x"]) ){
+					this.rebond(face.orientation);
+				}
+				
+			}
 			
 		}
 		
