@@ -1,3 +1,14 @@
+
+/* affichage debug calcul hitbox
+#tmp {
+	position: absolute;
+	height: 5px;
+	width: 5px;
+	background: blue;
+	z-index: 999;
+	border-radius: 50px;
+}*/
+
 #background, #map {
 	position: fixed;
 	top: 0;

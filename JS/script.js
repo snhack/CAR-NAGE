@@ -13,6 +13,9 @@ var vitesse_deplacement_standard = 10;
 var vitesse_rotation_standard = 10;
 var delai_tir_standard = 1;
 
+var longueur_joueur = 100;
+var largeur_joueur = 50;
+
 var nombre_joueurs = 0;
 var joueurs = [];
 var projectiles = [];

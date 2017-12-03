@@ -82,13 +82,32 @@ var joueur = function(id) {
 		var nouveau_x = this.x + Math.cos((this.angle-90)*(Math.PI/180)) * this.vitesse_deplacement;
 		var nouveau_y = this.y + Math.sin((this.angle-90)*(Math.PI/180)) * this.vitesse_deplacement;
 		
-		var test = this.test_collision(nouveau_x, nouveau_y);
-		document.getElementById("btnMapAlea").innerHTML = test;
-		
-		if(test){
+		if(this.test_collision(nouveau_x, nouveau_y)){
 			this.x = nouveau_x;
 			this.y = nouveau_y;
 		}
+		
+		
+		//preparation calcul hitbox
+		/*var angle_coin = Math.atan((longueur_joueur / 2) / (largeur_joueur / 2));
+		
+		var diagonale = Math.sqrt( Math.pow((longueur_joueur / 2), 2) + Math.pow((largeur_joueur / 2), 2) );
+		
+		//var x_coin_haut_gauche = this.x + ( Math.cos(angle_coin) * diagonale );//arriere droit
+		//var y_coin_haut_gauche = this.y + ( Math.sin(angle_coin) * diagonale );
+		
+		//var x_coin_haut_gauche = this.x + ( Math.cos(angle_coin + (2*(Math.PI/2)) ) * diagonale );//avant gauche
+		//var y_coin_haut_gauche = this.y + ( Math.sin(angle_coin + (2*(Math.PI/2)) ) * diagonale );
+		
+		var x_coin_haut_gauche = this.x + ( Math.cos(angle_coin + ((this.angle + 90 ) * Math.PI / 180) ) * diagonale );
+		var y_coin_haut_gauche = this.y + ( Math.sin(angle_coin + ((this.angle + 90 ) * Math.PI / 180) ) * diagonale );
+		
+		//var x_coin_haut_gauche = this.x + ( Math.cos(angle_coin + (3*(Math.PI/2)) ) * diagonale );
+		//var y_coin_haut_gauche = this.y + ( Math.sin(angle_coin + (3*(Math.PI/2)) ) * diagonale );
+		
+		
+		document.getElementById("tmp").style.top = y_coin_haut_gauche + "px";
+		document.getElementById("tmp").style.left = x_coin_haut_gauche + "px";*/
 		
 	};
 	
@@ -121,6 +140,8 @@ var joueur = function(id) {
 			for(var j = 0;j < map[i].faces.length;j++){
 				
 				var face = map[i].faces[j];
+				
+				//var coins_joueur = [{x:(nouveau_x + ()),y:()}, ]
 				
 				if( (face.orientation === "vertical") && (nouveau_x < (face.debut["x"] + 7)) && (nouveau_x > (face.debut["x"] - 7)) && (nouveau_y >= face.debut["y"]) && (nouveau_y <= face.fin["y"]) ){
 					
@@ -192,7 +213,7 @@ var projectile = function(x, y, angle) {
 				
 				var face = map[i].faces[j];
 				
-				if( (face.orientation === "vertical") && (this.x < (face.debut["x"] + 7)) && (this.x > (face.debut["x"] - 7)) && (this.y >= face.debut["y"]) && (this.y <= face.fin["y"]) ){
+				if( (face.orientation === "vertical") && (this.x <= (face.debut["x"] + 7)) && (this.x >= (face.debut["x"] - 7)) && (this.y >= face.debut["y"]) && (this.y <= face.fin["y"]) ){
 					
 					this.rebond(face.orientation);
 					
@@ -204,7 +225,7 @@ var projectile = function(x, y, angle) {
 					
 				}
 				
-				if( (face.orientation === "horizontal") && (this.y < (face.debut["y"] + 7)) && (this.y > (face.debut["y"] - 7)) && (this.x >= face.debut["x"]) && (this.x <= face.fin["x"]) ){
+				if( (face.orientation === "horizontal") && (this.y <= (face.debut["y"] + 7)) && (this.y >= (face.debut["y"] - 7)) && (this.x >= face.debut["x"]) && (this.x <= face.fin["x"]) ){
 					
 					this.rebond(face.orientation);
 					
