@@ -11,7 +11,7 @@ document.getElementById("map").style.width = largeur+"px";
 
 var vitesse_deplacement_standard = 10;
 var vitesse_rotation_standard = 10;
-var delai_tir_standard = 5;
+var delai_tir_standard = 1;
 
 var nombre_joueurs = 0;
 var joueurs = [];

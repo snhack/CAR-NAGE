@@ -78,15 +78,30 @@ var joueur = function(id) {
 	};
 	
 	this.avancer = function() {
-		this.x += Math.cos((this.angle-90)*(Math.PI/180)) * this.vitesse_deplacement;
-		this.y += Math.sin((this.angle-90)*(Math.PI/180)) * this.vitesse_deplacement;
-		this.test_collision();
+		
+		var nouveau_x = this.x + Math.cos((this.angle-90)*(Math.PI/180)) * this.vitesse_deplacement;
+		var nouveau_y = this.y + Math.sin((this.angle-90)*(Math.PI/180)) * this.vitesse_deplacement;
+		
+		var test = this.test_collision(nouveau_x, nouveau_y);
+		document.getElementById("btnMapAlea").innerHTML = test;
+		
+		if(test){
+			this.x = nouveau_x;
+			this.y = nouveau_y;
+		}
+		
 	};
 	
 	this.reculer = function() {
-		this.x -= Math.cos((this.angle-90)*(Math.PI/180)) * this.vitesse_deplacement;
-		this.y -= Math.sin((this.angle-90)*(Math.PI/180)) * this.vitesse_deplacement;
-		this.test_collision();
+		
+		var nouveau_x = this.x - Math.cos((this.angle-90)*(Math.PI/180)) * this.vitesse_deplacement;
+		var nouveau_y = this.y - Math.sin((this.angle-90)*(Math.PI/180)) * this.vitesse_deplacement;
+		
+		if(this.test_collision(nouveau_x, nouveau_y)){
+			this.x = nouveau_x;
+			this.y = nouveau_y;
+		}
+		
 	};
 	
 	this.reset_angle = function() {
@@ -99,23 +114,7 @@ var joueur = function(id) {
 		
 	};
 	
-	this.test_sortie_map = function() {
-		
-		if(this.x < 0){
-			this.x = 0;
-		}else if(this.x > largeur){
-			this.x = largeur;
-		}
-		
-		if(this.y < 0){
-			this.y = 0;
-		}else if(this.y > hauteur){
-			this.y = hauteur;
-		}
-		
-	};
-	
-	this.test_collision = function() {
+	this.test_collision = function(nouveau_x,nouveau_y) {
 		
 		for(var i = 0;i < map.length;i++){
 			
@@ -123,29 +122,21 @@ var joueur = function(id) {
 				
 				var face = map[i].faces[j];
 				
-				if( (face.orientation === "vertical") && (this.x < (face.debut["x"] + 6)) && (this.x > (face.debut["x"] - 6)) && (this.y >= face.debut["y"]) && (this.y <= face.fin["y"]) ){
+				if( (face.orientation === "vertical") && (nouveau_x < (face.debut["x"] + 7)) && (nouveau_x > (face.debut["x"] - 7)) && (nouveau_y >= face.debut["y"]) && (nouveau_y <= face.fin["y"]) ){
 					
-					/*if(this.x > face.debut["x"]){
-						this.x = face.debut["x"] + 1;
-					}else if(this.x < face.debut["x"]){
-						this.x = face.debut["x"] - 1;
-					}*/
+					return false;
 					
-				}
-				
-				if( (face.orientation === "horizontal") && (this.y < (face.debut["y"] + 6)) && (this.y > (face.debut["y"] - 6)) && (this.x >= face.debut["x"]) && (this.x <= face.fin["x"]) ){
+				}else if( (face.orientation === "horizontal") && (nouveau_y < (face.debut["y"] + 7)) && (nouveau_y > (face.debut["y"] - 7)) && (nouveau_x >= face.debut["x"]) && (nouveau_x <= face.fin["x"]) ){
 					
-					/*if(this.y > face.debut["y"]){
-						this.y = face.debut["y"] + 1;
-					}else if(this.y < face.debut["x"]){
-						this.y = face.debut["y"] - 1;
-					}*/
+					return false;
 					
 				}
 				
 			}
 			
 		}
+		
+		return true;
 		
 	};
 	
@@ -156,6 +147,7 @@ var joueur = function(id) {
 			projectiles.push(new projectile(this.x, this.y, this.angle));
 			this.dernier_tir = Date.now();
 		}
+		
 	}
 	
 };
