@@ -80,13 +80,13 @@ var joueur = function(id) {
 	this.avancer = function() {
 		this.x += Math.cos((this.angle-90)*(Math.PI/180)) * this.vitesse_deplacement;
 		this.y += Math.sin((this.angle-90)*(Math.PI/180)) * this.vitesse_deplacement;
-		this.test_sortie_map();
+		this.test_collision();
 	}
 	
 	this.reculer = function() {
 		this.x -= Math.cos((this.angle-90)*(Math.PI/180)) * this.vitesse_deplacement;
 		this.y -= Math.sin((this.angle-90)*(Math.PI/180)) * this.vitesse_deplacement;
-		this.test_sortie_map();
+		this.test_collision();
 	}
 	
 	this.reset_angle = function() {
@@ -115,6 +115,28 @@ var joueur = function(id) {
 		
 	}
 	
+	this.test_collision = function() {
+		
+		for(var i = 0;i < devMap.length;i++){
+			
+			for(var j = 0;j < devMap[i].faces.length;j++){
+				
+				var face = devMap[i].faces[j];
+				
+				if( (face.orientation == "vertical") && (this.x < (face.debut["x"] + 6)) && (this.x > (face.debut["x"] - 6)) && (this.y >= face.debut["y"]) && (this.y <= face.fin["y"]) ){
+					this.x = face.debut["x"];
+				}
+				
+				if( (face.orientation == "horizontal") && (this.y < (face.debut["y"] + 6)) && (this.y > (face.debut["y"] - 6)) && (this.x >= face.debut["x"]) && (this.x <= face.fin["x"]) ){
+					this.y = face.debut["y"];
+				}
+				
+			}
+			
+		}
+		
+	}
+	
 	this.tir = function() {
 		
 		if(this.dernier_tir <= (Date.now() - (this.delai_tir * 1000))){
@@ -139,7 +161,6 @@ var projectile = function(x, y, angle) {
 		this.x += Math.cos((this.angle-90)*(Math.PI/180)) * this.vitesse_deplacement;
 		this.y += Math.sin((this.angle-90)*(Math.PI/180)) * this.vitesse_deplacement;
 		this.test_collision();
-		//this.test_sortie_map();
 	}
 	
 	this.rebond = function(sens) {
@@ -159,37 +180,6 @@ var projectile = function(x, y, angle) {
 		
 	}
 	
-	this.test_sortie_map = function() {
-		
-		if(this.x <= 0){
-			
-			this.rebond("vertical")
-			
-			this.x = 0;
-			
-		}else if(this.x >= largeur){
-			
-			this.rebond("vertical")
-			
-			this.x = largeur;
-		}
-		
-		if(this.y <= 0){
-			
-			this.rebond("horizontal")
-			
-			this.y = 0;
-			
-		}else if(this.y >= hauteur){
-			
-			this.rebond("horizontal")
-			
-			this.y = hauteur;
-			
-		}
-		
-	}
-	
 	this.test_collision = function() {
 		
 		for(var i = 0;i < devMap.length;i++){
@@ -198,11 +188,11 @@ var projectile = function(x, y, angle) {
 				
 				var face = devMap[i].faces[j];
 				
-				if( (face.orientation == "vertical") && (this.x < (face.debut["x"] + 5)) && (this.x > (face.debut["x"] - 5)) && (this.y >= face.debut["y"]) && (this.y <= face.fin["y"]) ){
+				if( (face.orientation == "vertical") && (this.x < (face.debut["x"] + 6)) && (this.x > (face.debut["x"] - 6)) && (this.y >= face.debut["y"]) && (this.y <= face.fin["y"]) ){
 					this.rebond(face.orientation);
 				}
 				
-				if( (face.orientation == "horizontal") && (this.y < (face.debut["y"] + 5)) && (this.y > (face.debut["y"] - 5)) && (this.x >= face.debut["x"]) && (this.x <= face.fin["x"]) ){
+				if( (face.orientation == "horizontal") && (this.y < (face.debut["y"] + 6)) && (this.y > (face.debut["y"] - 6)) && (this.x >= face.debut["x"]) && (this.x <= face.fin["x"]) ){
 					this.rebond(face.orientation);
 				}
 				
