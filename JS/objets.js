@@ -124,11 +124,23 @@ var joueur = function(id) {
 				var face = map[i].faces[j];
 				
 				if( (face.orientation === "vertical") && (this.x < (face.debut["x"] + 6)) && (this.x > (face.debut["x"] - 6)) && (this.y >= face.debut["y"]) && (this.y <= face.fin["y"]) ){
-					this.x = face.debut["x"];
+					
+					/*if(this.x > face.debut["x"]){
+						this.x = face.debut["x"] + 1;
+					}else if(this.x < face.debut["x"]){
+						this.x = face.debut["x"] - 1;
+					}*/
+					
 				}
 				
 				if( (face.orientation === "horizontal") && (this.y < (face.debut["y"] + 6)) && (this.y > (face.debut["y"] - 6)) && (this.x >= face.debut["x"]) && (this.x <= face.fin["x"]) ){
-					this.y = face.debut["y"];
+					
+					/*if(this.y > face.debut["y"]){
+						this.y = face.debut["y"] + 1;
+					}else if(this.y < face.debut["x"]){
+						this.y = face.debut["y"] - 1;
+					}*/
+					
 				}
 				
 			}
@@ -188,12 +200,28 @@ var projectile = function(x, y, angle) {
 				
 				var face = map[i].faces[j];
 				
-				if( (face.orientation === "vertical") && (this.x < (face.debut["x"] + 6)) && (this.x > (face.debut["x"] - 6)) && (this.y >= face.debut["y"]) && (this.y <= face.fin["y"]) ){
+				if( (face.orientation === "vertical") && (this.x < (face.debut["x"] + 7)) && (this.x > (face.debut["x"] - 7)) && (this.y >= face.debut["y"]) && (this.y <= face.fin["y"]) ){
+					
 					this.rebond(face.orientation);
+					
+					/*if(this.y > face.debut["y"]){
+						this.y = face.debut["y"] + 1;
+					}else if(this.y < face.debut["y"]){
+						this.y = face.debut["y"] - 1;
+					}*/
+					
 				}
 				
-				if( (face.orientation === "horizontal") && (this.y < (face.debut["y"] + 6)) && (this.y > (face.debut["y"] - 6)) && (this.x >= face.debut["x"]) && (this.x <= face.fin["x"]) ){
+				if( (face.orientation === "horizontal") && (this.y < (face.debut["y"] + 7)) && (this.y > (face.debut["y"] - 7)) && (this.x >= face.debut["x"]) && (this.x <= face.fin["x"]) ){
+					
 					this.rebond(face.orientation);
+					
+					/*if(this.y > face.debut["y"]){
+						this.y = face.debut["y"] + 1;
+					}else if(this.y < face.debut["y"]){
+						this.y = face.debut["y"] - 1;
+					}*/
+					
 				}
 				
 			}
