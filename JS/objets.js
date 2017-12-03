@@ -51,6 +51,7 @@ var joueur = function(id) {
 	this.x = 300;
 	this.y = 300;
 	this.angle = 0;
+	
 	this.vitesse_deplacement = vitesse_deplacement_standard;
 	this.vitesse_rotation = vitesse_deplacement_standard;
 	this.delai_tir = delai_tir_standard;
@@ -87,28 +88,6 @@ var joueur = function(id) {
 			this.y = nouveau_y;
 		}
 		
-		
-		//preparation calcul hitbox
-		/*var angle_coin = Math.atan((longueur_joueur / 2) / (largeur_joueur / 2));
-		
-		var diagonale = Math.sqrt( Math.pow((longueur_joueur / 2), 2) + Math.pow((largeur_joueur / 2), 2) );
-		
-		//var x_coin_haut_gauche = this.x + ( Math.cos(angle_coin) * diagonale );//arriere droit
-		//var y_coin_haut_gauche = this.y + ( Math.sin(angle_coin) * diagonale );
-		
-		//var x_coin_haut_gauche = this.x + ( Math.cos(angle_coin + (2*(Math.PI/2)) ) * diagonale );//avant gauche
-		//var y_coin_haut_gauche = this.y + ( Math.sin(angle_coin + (2*(Math.PI/2)) ) * diagonale );
-		
-		var x_coin_haut_gauche = this.x + ( Math.cos(angle_coin + ((this.angle + 90 ) * Math.PI / 180) ) * diagonale );
-		var y_coin_haut_gauche = this.y + ( Math.sin(angle_coin + ((this.angle + 90 ) * Math.PI / 180) ) * diagonale );
-		
-		//var x_coin_haut_gauche = this.x + ( Math.cos(angle_coin + (3*(Math.PI/2)) ) * diagonale );
-		//var y_coin_haut_gauche = this.y + ( Math.sin(angle_coin + (3*(Math.PI/2)) ) * diagonale );
-		
-		
-		document.getElementById("tmp").style.top = y_coin_haut_gauche + "px";
-		document.getElementById("tmp").style.left = x_coin_haut_gauche + "px";*/
-		
 	};
 	
 	this.reculer = function() {
@@ -133,7 +112,35 @@ var joueur = function(id) {
 		
 	};
 	
+	this.calcul_hitbox = function(x,y,angle) {
+		
+		var angle_reference = (angle - 90);
+		
+		var angle_coin = (90 - (Math.atan((longueur_joueur / 2) / (largeur_joueur / 2)) * 180 / Math.PI));
+		var diagonale = Math.sqrt( Math.pow((longueur_joueur / 2), 2) + Math.pow((largeur_joueur / 2), 2) );
+		
+		var angles = [];
+		
+		angles[0] = (angle_reference - angle_coin) * Math.PI / 180;
+		angles[1] = (angle_reference + angle_coin) * Math.PI / 180;
+		angles[2] = (angle_reference + 180 + angle_coin) * Math.PI / 180;
+		angles[3] = (angle_reference + 180 - angle_coin) * Math.PI / 180;
+		
+		var coins = [];
+		
+		for(var i = 0;i < angles.length;i++){
+			
+			coins[i] = {x:(x + ( Math.cos(angles[i]) * diagonale )), y:(y + ( Math.sin(angles[i]) * diagonale ))};
+			
+		}
+		
+		return coins;
+		
+	}
+	
 	this.test_collision = function(nouveau_x,nouveau_y) {
+		
+		var coins_joueur = this.calcul_hitbox(nouveau_x, nouveau_y, this.angle);
 		
 		for(var i = 0;i < map.length;i++){
 			
@@ -141,7 +148,22 @@ var joueur = function(id) {
 				
 				var face = map[i].faces[j];
 				
-				//var coins_joueur = [{x:(nouveau_x + ()),y:()}, ]
+				/*for(var k = 0;k < coins_joueur.length;k++){
+					
+					var espace = 2;
+					
+					if( (face.orientation === "vertical") && (coins_joueur[k]["x"] < (face.debut["x"] + espace)) && (coins_joueur[k]["x"] > (face.debut["x"] - espace)) && (coins_joueur[k]["y"] >= face.debut["y"]) && (coins_joueur[k]["y"] <= face.fin["y"]) ){
+						
+						return false;
+						
+					}else if( (face.orientation === "horizontal") && (coins_joueur[k]["y"] < (face.debut["y"] + espace)) && (coins_joueur[k]["y"] > (face.debut["y"] - espace)) && (coins_joueur[k]["x"] >= face.debut["x"]) && (coins_joueur[k]["x"] <= face.fin["x"]) ){
+						
+						return false;
+						
+					}
+					
+				}*/
+				
 				
 				if( (face.orientation === "vertical") && (nouveau_x < (face.debut["x"] + 7)) && (nouveau_x > (face.debut["x"] - 7)) && (nouveau_y >= face.debut["y"]) && (nouveau_y <= face.fin["y"]) ){
 					
