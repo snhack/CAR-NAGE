@@ -1,6 +1,6 @@
 /* Variables */
 
-var largeurMur = 5,
+var largeurMur = 10,
     Murs = [];
 
 /* Constructeur */
@@ -165,11 +165,11 @@ var joueur = function(id) {
 				}*/
 				
 				
-				if( (face.orientation === "vertical") && (nouveau_x < (face.debut["x"] + 7)) && (nouveau_x > (face.debut["x"] - 7)) && (nouveau_y >= face.debut["y"]) && (nouveau_y <= face.fin["y"]) ){
+				if( /*(face.orientation === "vertical") && */(nouveau_x < (face.debut["x"] + 7)) && (nouveau_x > (face.debut["x"] - 7)) && (nouveau_y >= face.debut["y"]) && (nouveau_y <= face.fin["y"]) ){
 					
 					return false;
 					
-				}else if( (face.orientation === "horizontal") && (nouveau_y < (face.debut["y"] + 7)) && (nouveau_y > (face.debut["y"] - 7)) && (nouveau_x >= face.debut["x"]) && (nouveau_x <= face.fin["x"]) ){
+				}else if( /*(face.orientation === "horizontal") && */(nouveau_y < (face.debut["y"] + 7)) && (nouveau_y > (face.debut["y"] - 7)) && (nouveau_x >= face.debut["x"]) && (nouveau_x <= face.fin["x"]) ){
 					
 					return false;
 					
