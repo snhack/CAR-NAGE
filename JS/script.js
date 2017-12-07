@@ -27,6 +27,7 @@ var canvas = document.getElementById("background"),
 //Fonction d'affichage des murs suivant la map
 function affichageMurs(array) {
     context.clearRect(0,0,wCan,hCan);
+    context.fillStyle = 'black';
     for(var i = 0; i < array.length; i++){
         context.fillRect(array[i].rectX, array[i].rectY, array[i].w, array[i].h);
     }

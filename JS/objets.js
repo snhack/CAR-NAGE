@@ -45,9 +45,11 @@ var Face = function (x1, y1, x2, y2, orientation) {
     this.orientation = orientation;
 };
 
-var joueur = function(id) {
+var joueur = function(id, couleur) {
 	
 	this.id = id;
+	//this.couleur = couleur;
+    this.couleur = 'orange';
 	this.x = 300;
 	this.y = 300;
 	this.angle = 0;
