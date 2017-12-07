@@ -67,7 +67,7 @@ document.addEventListener("keyup", function(event){
 	}
 }, false);
 
-/* Initialisation, a la fin du chergement du DOM */
+/* Initialisation, a la fin du chargement du DOM */
 document.addEventListener("DOMContentLoaded", function() {
 	map = devMap;
 	affichageMurs(devMap);
