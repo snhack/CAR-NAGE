@@ -47,6 +47,17 @@ function affichage_joueurs(){
 	
 }
 
+function affichageJoueursCanvas(){
+    for(var i = 0;i < joueurs.length;i++) {
+            context.moveTo(joueurs[i].calcul_hitbox[0].x, joueurs[i].calcul_hitbox[0].y);
+            context.lineTo(joueurs[i].calcul_hitbox[1].x, joueurs[i].calcul_hitbox[1].y);
+            context.lineTo(joueurs[i].calcul_hitbox[2].x, joueurs[i].calcul_hitbox[2].y);
+            context.lineTo(joueurs[i].calcul_hitbox[3].x, joueurs[i].calcul_hitbox[3].y);
+            context.lineTo(joueurs[i].calcul_hitbox[0].x, joueurs[i].calcul_hitbox[0].y);
+            context.stroke();
+    }
+}
+
 function deplacements_projectiles(){
     
     for(var i = 0;i < projectiles.length;i++){
@@ -82,6 +93,7 @@ function affichageProjectilesCanvas(){
 function maj(){
     context.clearRect(0,0,wCan,hCan);
     affichageMurs(map);
+
 	deplacements_joueurs();
 	affichage_joueurs();
 	deplacements_projectiles();

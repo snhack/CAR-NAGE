@@ -112,9 +112,9 @@ var joueur = function(id) {
 		
 	};
 	
-	this.calcul_hitbox = function(x,y,angle) {
+	this.calcul_hitbox = function() {
 		
-		var angle_reference = (angle - 90);
+		var angle_reference = (this.angle - 90);
 		
 		var angle_coin = (90 - (Math.atan((longueur_joueur / 2) / (largeur_joueur / 2)) * 180 / Math.PI));
 		var diagonale = Math.sqrt( Math.pow((longueur_joueur / 2), 2) + Math.pow((largeur_joueur / 2), 2) );
@@ -130,7 +130,7 @@ var joueur = function(id) {
 		
 		for(var i = 0;i < angles.length;i++){
 			
-			coins[i] = {x:(x + ( Math.cos(angles[i]) * diagonale )), y:(y + ( Math.sin(angles[i]) * diagonale ))};
+			coins[i] = {x:(this.x + ( Math.cos(angles[i]) * diagonale )), y:(this.y + ( Math.sin(angles[i]) * diagonale ))};
 			
 		}
 		
