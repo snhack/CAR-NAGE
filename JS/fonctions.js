@@ -38,12 +38,26 @@ function affichageJoueurs(){
         var coins = joueurs[i].calcul_hitbox();
             context.beginPath();
             context.fillStyle = joueurs[i].couleur;
+            context.strokeStyle = 'black';
             context.moveTo(coins[0].x, coins[0].y);
             context.lineTo(coins[1].x, coins[1].y);
             context.lineTo(coins[2].x, coins[2].y);
             context.lineTo(coins[3].x, coins[3].y);
             context.lineTo(coins[0].x, coins[0].y);
             context.fill();
+            context.stroke();
+            /* ICI ON FAIT LE CANON DU TANK
+
+            context.beginPath();
+            context.fillStyle = 'black';
+            context.moveTo(coins[0].x-10, coins[0].y-10);
+            context.lineTo(coins[1].x+10, coins[1].y-10);
+            context.lineTo(coins[2].x+10, coins[2].y+10);
+            context.lineTo(coins[3].x-10, coins[3].y+10);
+            context.lineTo(coins[0].x-10, coins[0].y-10);
+            context.fill();
+
+            */
     }
 
 }
