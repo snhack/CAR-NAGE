@@ -1,5 +1,4 @@
 function creation_joueur() {
-	document.getElementById("map").innerHTML += "<div class='joueur' id='joueur_"+nombre_joueurs+"'></div>";
 	var nouveau_joueur = new joueur(nombre_joueurs);
 	nombre_joueurs++;
 	return nouveau_joueur;

@@ -6,9 +6,6 @@ var map = [];
 document.getElementById("background").style.height = hauteur+"px";
 document.getElementById("background").style.width = largeur+"px";
 
-document.getElementById("map").style.height = hauteur+"px";
-document.getElementById("map").style.width = largeur+"px";
-
 var vitesse_deplacement_standard = 10;
 var vitesse_rotation_standard = 10;
 var delai_tir_standard = 0;

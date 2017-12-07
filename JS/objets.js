@@ -189,7 +189,6 @@ var joueur = function(id) {
 	this.tir = function() {
 		
 		if(this.dernier_tir <= (Date.now() - (this.delai_tir * 1000))){
-			document.getElementById("map").innerHTML += "<div class='balle' id='balle_"+projectiles.length+"'></div>";
 			projectiles.push(new projectile(this.x, this.y, this.angle));
 			this.dernier_tir = Date.now();
 		}
