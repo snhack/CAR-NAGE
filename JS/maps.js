@@ -73,7 +73,6 @@ function creationMapAleatoire() {
         }
         mapAleatoire[i] = new Mur(orientation,x,y,l);
     }
-    affichageMurs(mapAleatoire);
     map = mapAleatoire;
 }
 
@@ -90,7 +89,3 @@ function nbAlea(min, max) {
 }
 
 
-//Console.log
-console.log(devMap[5].faces[0].debut);
-console.log(devMap[5].faces[0].fin);
-console.log(tailleCouloirs);

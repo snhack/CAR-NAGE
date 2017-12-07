@@ -1,10 +1,9 @@
-var joueur = function(id, couleur) {
+var joueur = function(id, couleur, x, y) {
 	
 	this.id = id;
-	//this.couleur = couleur;
-    this.couleur = 'orange';
-	this.x = 300;
-	this.y = 300;
+    this.couleur = couleur;
+	this.x = x;
+	this.y = y;
 	this.angle = 0;
 	
 	this.vitesse_deplacement = vitesse_deplacement_standard;
@@ -18,10 +17,7 @@ var joueur = function(id, couleur) {
 	this.touche_gauche = touche_gauche_standard[id];
 	this.touche_droite = touche_droite_standard[id];
 	this.touche_tir = touche_tir_standard[id];
-	
-	this.css = function() {
-		return document.getElementById("joueur_"+this.id.toString());
-	};
+
 	
 	this.rotation_gauche = function() {
 		this.angle -= this.vitesse_rotation;
@@ -67,12 +63,19 @@ var joueur = function(id, couleur) {
 		
 	};
 	
-	this.calcul_hitbox = function() {
+	this.calcul_hitbox = function(canon) {
 		
 		var angle_reference = (this.angle - 90);
+		var l = longueur_joueur;
+		var L = largeur_joueur;
+
+		if(canon === true) {
+            l = longueur_joueur/3;
+            L = largeur_joueur/3;
+        }
 		
-		var angle_coin = (90 - (Math.atan((longueur_joueur / 2) / (largeur_joueur / 2)) * 180 / Math.PI));
-		var diagonale = Math.sqrt( Math.pow((longueur_joueur / 2), 2) + Math.pow((largeur_joueur / 2), 2) );
+		var angle_coin = (90 - (Math.atan((l / 2) / (L / 2)) * 180 / Math.PI));
+		var diagonale = Math.sqrt( Math.pow((l / 2), 2) + Math.pow((L / 2), 2) );
 		
 		var angles = [];
 		
@@ -85,18 +88,18 @@ var joueur = function(id, couleur) {
 
 		
 		for(var i = 0;i < angles.length;i++){
-            coins[i] = new Object();
+            coins[i] = {};
 			coins[i].x = this.x + ( Math.cos(angles[i]) * diagonale );
             coins[i].y = this.y + ( Math.sin(angles[i]) * diagonale );
 		}
-		
+
 		return coins;
 		
 	};
 	
 	this.test_collision = function(nouveau_x,nouveau_y) {
 		
-		var coins_joueur = this.calcul_hitbox();
+		var coins_joueur = this.calcul_hitbox(false);
 		
 		for(var i = 0;i < map.length;i++){
 			
@@ -160,6 +163,7 @@ var projectile = function(x, y, angle) {
 	this.angle = angle;
 	this.vitesse_deplacement = vitesse_deplacement_standard;
 	this.nombre_rebond = 0;
+	this.diametre = diametreProjectile;
 	
 	this.trajectoire = function() {
 		this.x += Math.cos((this.angle-90)*(Math.PI/180)) * this.vitesse_deplacement;
@@ -185,14 +189,16 @@ var projectile = function(x, y, angle) {
 	};
 	
 	this.test_collision = function() {
-		
+
+		var erreur = 5;
+
 		for(var i = 0;i < map.length;i++){
 			
 			for(var j = 0;j < map[i].faces.length;j++){
 				
 				var face = map[i].faces[j];
 				
-				if( /*(face.orientation === "vertical") &&*/ (this.x <= (face.debut["x"] + 25)) && (this.x >= (face.debut["x"] - 25)) && (this.y >= face.debut["y"]) && (this.y <= face.fin["y"]) ){
+				if( /*(face.orientation === "vertical") &&*/ (this.x <= (face.debut["x"] + erreur)) && (this.x >= (face.debut["x"] - erreur)) && (this.y >= face.debut["y"] + erreur) && (this.y <= face.fin["y"] - erreur) ){
 					
 					this.rebond(face.orientation);
 					
@@ -204,7 +210,7 @@ var projectile = function(x, y, angle) {
 					
 				}
 				
-				if( /*(face.orientation === "horizontal") &&*/ (this.y <= (face.debut["y"] + 25)) && (this.y >= (face.debut["y"] - 25)) && (this.x >= face.debut["x"]) && (this.x <= face.fin["x"]) ){
+				if( /*(face.orientation === "horizontal") &&*/ (this.y <= (face.debut["y"] + erreur)) && (this.y >= (face.debut["y"] - erreur)) && (this.x >= face.debut["x"] + erreur) && (this.x <= face.fin["x"] - erreur) ){
 					
 					this.rebond(face.orientation);
 					
@@ -221,9 +227,4 @@ var projectile = function(x, y, angle) {
 		}
 		
 	};
-	
-	this.css = function() {
-		return document.getElementById("balle_"+this.id.toString());
-	}
-	
 };

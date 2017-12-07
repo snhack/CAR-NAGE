@@ -2,6 +2,7 @@
 var hauteur = 800;
 var largeur = 800;
 var map = [];
+var run;
 
 document.getElementById("background").style.height = hauteur+"px";
 document.getElementById("background").style.width = largeur+"px";
@@ -10,8 +11,10 @@ var vitesse_deplacement_standard = 10;
 var vitesse_rotation_standard = 10;
 var delai_tir_standard = 0;
 
-var longueur_joueur = 100;
-var largeur_joueur = 50;
+
+var largeur_joueur = 40;
+var longueur_joueur = largeur_joueur*1.618033;
+var diametreProjectile = 5;
 
 var nombre_joueurs = 0;
 var joueurs = [];
@@ -35,11 +38,14 @@ function affichageMurs(array) {
 
 //Action des boutons
 document.getElementById('btnMapAlea').onclick = function () {
+    clearInterval(run);
     creationMapAleatoire();
+    run = window.setInterval(maj,25);
 };
 document.getElementById('btnDevMap').onclick = function () {
-    affichageMurs(devMap);
+    clearInterval(run);
     map = devMap;
+    run = window.setInterval(maj,25);
 };
 
 
@@ -70,8 +76,7 @@ document.addEventListener("keyup", function(event){
 /* Initialisation, a la fin du chargement du DOM */
 document.addEventListener("DOMContentLoaded", function() {
 	map = devMap;
-	affichageMurs(devMap);
-	joueurs = [creation_joueur(), creation_joueur()];
-	var run = window.setInterval(maj,25);
+	joueurs = [creation_joueur('orange',300,300), creation_joueur('blue',600,300)];
+	run = window.setInterval(maj,25);
 	
 });

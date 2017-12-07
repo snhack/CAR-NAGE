@@ -1,5 +1,5 @@
-function creation_joueur() {
-	var nouveau_joueur = new joueur(nombre_joueurs);
+function creation_joueur(couleur, x, y) {
+	var nouveau_joueur = new joueur(nombre_joueurs, couleur, x, y);
 	nombre_joueurs++;
 	return nouveau_joueur;
 }
@@ -35,8 +35,9 @@ function deplacements_joueurs(){
 
 function affichageJoueurs(){
     for(var i = 0;i < joueurs.length;i++) {
-        var coins = joueurs[i].calcul_hitbox();
+            var coins = joueurs[i].calcul_hitbox(false);
             context.beginPath();
+            context.lineWidth = 5;
             context.fillStyle = joueurs[i].couleur;
             context.strokeStyle = 'black';
             context.moveTo(coins[0].x, coins[0].y);
@@ -45,19 +46,23 @@ function affichageJoueurs(){
             context.lineTo(coins[3].x, coins[3].y);
             context.lineTo(coins[0].x, coins[0].y);
             context.fill();
+            context.lineJoin="bevel";
             context.stroke();
-            /* ICI ON FAIT LE CANON DU TANK
 
+            var canon = joueurs[i].calcul_hitbox(true);
             context.beginPath();
-            context.fillStyle = 'black';
-            context.moveTo(coins[0].x-10, coins[0].y-10);
-            context.lineTo(coins[1].x+10, coins[1].y-10);
-            context.lineTo(coins[2].x+10, coins[2].y+10);
-            context.lineTo(coins[3].x-10, coins[3].y+10);
-            context.lineTo(coins[0].x-10, coins[0].y-10);
+            var grd = context.createLinearGradient(canon[0].x, canon[0].y, canon[3].x, canon[3].y);
+            grd.addColorStop(0, "black");
+            grd.addColorStop(1, joueurs[i].couleur);
+            context.fillStyle = grd;
+            context.moveTo(canon[0].x, canon[0].y);
+            context.lineTo(canon[1].x, canon[1].y);
+            context.lineTo(canon[2].x, canon[2].y);
+            context.lineTo(canon[3].x, canon[3].y);
+            context.lineTo(canon[0].x, canon[0].y);
             context.fill();
 
-            */
+
     }
 
 }
@@ -77,7 +82,7 @@ function affichageProjectiles(){
     for(var i = 0; i < projectiles.length; i++) {
         context.beginPath();
         context.fillStyle = 'black';
-        context.arc(projectiles[i].x, projectiles[i].y, 5, 0, 2 * Math.PI);
+        context.arc(projectiles[i].x, projectiles[i].y, projectiles[i].diametre, 0, 2 * Math.PI);
         context.fill();
     }
 }
