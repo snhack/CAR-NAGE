@@ -34,22 +34,10 @@ function deplacements_joueurs(){
 }
 
 
-//affichage temporaire pour dev
-function affichage_joueurs(){
-	
-	for(var i = 0;i < joueurs.length;i++){
-		
-		joueurs[i].css().style.top = joueurs[i].y + "px";
-		joueurs[i].css().style.left = joueurs[i].x + "px";
-		joueurs[i].css().style.transform = "translate(-50%, -50%) rotate("+joueurs[i].angle+"deg)";
-		
-	}
-	
-}
-
-function affichageJoueursCanvas(){
+function affichageJoueurs(){
     for(var i = 0;i < joueurs.length;i++) {
         var coins = joueurs[i].calcul_hitbox();
+            context.beginPath();
             context.moveTo(coins[0].x, coins[0].y);
             context.lineTo(coins[1].x, coins[1].y);
             context.lineTo(coins[2].x, coins[2].y);
@@ -61,28 +49,17 @@ function affichageJoueursCanvas(){
 }
 
 function deplacements_projectiles(){
-    
+
     for(var i = 0;i < projectiles.length;i++){
-    	
+
     	projectiles[i].trajectoire();
-    	
+
     }
-    
+
 }
 
-//affichage temporaire pour dev
-function affichage_projectiles(){
-	
-	for(var i = 0;i < projectiles.length;i++){
-		
-		projectiles[i].css().style.top = projectiles[i].y + "px";
-		projectiles[i].css().style.left = projectiles[i].x + "px";
-		
-	}
-	
-}
 
-function affichageProjectilesCanvas(){
+function affichageProjectiles(){
     for(var i = 0; i < projectiles.length; i++) {
         context.beginPath();
         context.arc(projectiles[i].x, projectiles[i].y, 5, 0, 2 * Math.PI);
@@ -95,9 +72,8 @@ function affichageProjectilesCanvas(){
 function maj(){
     context.clearRect(0,0,wCan,hCan);
     affichageMurs(map);
-    affichageJoueursCanvas();
+    affichageJoueurs();
 	deplacements_joueurs();
-	//affichage_joueurs();
 	deplacements_projectiles();
-	affichageProjectilesCanvas();
+	affichageProjectiles();
 }
