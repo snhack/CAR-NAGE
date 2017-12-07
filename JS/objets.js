@@ -127,17 +127,17 @@ var joueur = function(id) {
 		angles[3] = (angle_reference + 180 - angle_coin) * Math.PI / 180;
 		
 		var coins = [];
+
 		
 		for(var i = 0;i < angles.length;i++){
-			
-			coins[i].x = (this.x + ( Math.cos(angles[i]) * diagonale ));
-			coins[i].y = (this.y + ( Math.sin(angles[i]) * diagonale ));
-			
+            coins[i] = new Object();
+			coins[i].x = this.x + ( Math.cos(angles[i]) * diagonale );
+            coins[i].y = this.y + ( Math.sin(angles[i]) * diagonale );
 		}
 		
 		return coins;
 		
-	}
+	};
 	
 	this.test_collision = function(nouveau_x,nouveau_y) {
 		

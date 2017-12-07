@@ -49,12 +49,13 @@ function affichage_joueurs(){
 
 function affichageJoueursCanvas(){
     for(var i = 0;i < joueurs.length;i++) {
-            context.moveTo(joueurs[i].calcul_hitbox[0].x, joueurs[i].calcul_hitbox[0].y);
-            context.lineTo(joueurs[i].calcul_hitbox[1].x, joueurs[i].calcul_hitbox[1].y);
-            context.lineTo(joueurs[i].calcul_hitbox[2].x, joueurs[i].calcul_hitbox[2].y);
-            context.lineTo(joueurs[i].calcul_hitbox[3].x, joueurs[i].calcul_hitbox[3].y);
-            context.lineTo(joueurs[i].calcul_hitbox[0].x, joueurs[i].calcul_hitbox[0].y);
-            context.stroke();
+        var coins = joueurs[i].calcul_hitbox();
+            context.moveTo(coins[0].x, coins[0].y);
+            context.lineTo(coins[1].x, coins[1].y);
+            context.lineTo(coins[2].x, coins[2].y);
+            context.lineTo(coins[3].x, coins[3].y);
+            context.lineTo(coins[0].x, coins[0].y);
+            context.fill();
     }
 
 }
@@ -96,7 +97,7 @@ function maj(){
     affichageMurs(map);
     affichageJoueursCanvas();
 	deplacements_joueurs();
-	affichage_joueurs();
+	//affichage_joueurs();
 	deplacements_projectiles();
 	affichageProjectilesCanvas();
 }
