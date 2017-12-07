@@ -27,7 +27,7 @@ TODO : améliorer les règles pour les murs aléatoires
 var mapAleatoire = [],
     nbMurs = {min:10,max:20},
     tailleCouloirs = prct(10, 'x'),
-    aleaHorizontal = {x:[],y:[prct(10,'y'),prct(10,'y')+tailleCouloirs],orientation:'horizontal'},
+    aleaHorizontal = {x:[],y:[],orientation:'horizontal'},
     aleaVertical = {x:[],y:[],orientation:'vertical'};
 
 

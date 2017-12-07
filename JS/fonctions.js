@@ -69,9 +69,21 @@ function affichage_projectiles(){
 	
 }
 
+function affichageProjectilesCanvas(){
+    for(var i = 0; i < projectiles.length; i++) {
+        context.beginPath();
+        context.arc(projectiles[i].x, projectiles[i].y, 5, 0, 2 * Math.PI);
+        context.fill();
+    }
+}
+
+
+
 function maj(){
+    context.clearRect(0,0,wCan,hCan);
+    affichageMurs(map);
 	deplacements_joueurs();
 	affichage_joueurs();
 	deplacements_projectiles();
-	affichage_projectiles();
+	affichageProjectilesCanvas();
 }
