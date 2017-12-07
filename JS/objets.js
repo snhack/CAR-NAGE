@@ -130,7 +130,8 @@ var joueur = function(id) {
 		
 		for(var i = 0;i < angles.length;i++){
 			
-			coins[i] = {x:(this.x + ( Math.cos(angles[i]) * diagonale )), y:(this.y + ( Math.sin(angles[i]) * diagonale ))};
+			coins[i].x = (this.x + ( Math.cos(angles[i]) * diagonale ));
+			coins[i].y = (this.y + ( Math.sin(angles[i]) * diagonale ));
 			
 		}
 		
@@ -140,7 +141,7 @@ var joueur = function(id) {
 	
 	this.test_collision = function(nouveau_x,nouveau_y) {
 		
-		var coins_joueur = this.calcul_hitbox(nouveau_x, nouveau_y, this.angle);
+		var coins_joueur = this.calcul_hitbox();
 		
 		for(var i = 0;i < map.length;i++){
 			
@@ -165,11 +166,13 @@ var joueur = function(id) {
 				}*/
 				
 				
-				if( /*(face.orientation === "vertical") && */(nouveau_x < (face.debut["x"] + 7)) && (nouveau_x > (face.debut["x"] - 7)) && (nouveau_y >= face.debut["y"]) && (nouveau_y <= face.fin["y"]) ){
+				if( (face.orientation === "vertical") && (nouveau_x < (face.debut["x"] + 7)) && (nouveau_x > (face.debut["x"] - 7)) && (nouveau_y >= face.debut["y"]) && (nouveau_y <= face.fin["y"]) ){
+					
+					
 					
 					return false;
 					
-				}else if( /*(face.orientation === "horizontal") && */(nouveau_y < (face.debut["y"] + 7)) && (nouveau_y > (face.debut["y"] - 7)) && (nouveau_x >= face.debut["x"]) && (nouveau_x <= face.fin["x"]) ){
+				}else if( (face.orientation === "horizontal") && (nouveau_y < (face.debut["y"] + 7)) && (nouveau_y > (face.debut["y"] - 7)) && (nouveau_x >= face.debut["x"]) && (nouveau_x <= face.fin["x"]) ){
 					
 					return false;
 					
