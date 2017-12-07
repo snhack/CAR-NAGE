@@ -56,6 +56,7 @@ function affichageJoueursCanvas(){
             context.lineTo(joueurs[i].calcul_hitbox[0].x, joueurs[i].calcul_hitbox[0].y);
             context.stroke();
     }
+
 }
 
 function deplacements_projectiles(){
@@ -93,7 +94,7 @@ function affichageProjectilesCanvas(){
 function maj(){
     context.clearRect(0,0,wCan,hCan);
     affichageMurs(map);
-
+    affichageJoueursCanvas();
 	deplacements_joueurs();
 	affichage_joueurs();
 	deplacements_projectiles();
