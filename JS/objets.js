@@ -123,8 +123,8 @@ var joueur = function(id) {
 		
 		angles[0] = (angle_reference - angle_coin) * Math.PI / 180;
 		angles[1] = (angle_reference + angle_coin) * Math.PI / 180;
-		angles[2] = (angle_reference + 180 + angle_coin) * Math.PI / 180;
-		angles[3] = (angle_reference + 180 - angle_coin) * Math.PI / 180;
+		angles[2] = (angle_reference + 180 - angle_coin) * Math.PI / 180;
+		angles[3] = (angle_reference + 180 + angle_coin) * Math.PI / 180;
 		
 		var coins = [];
 
