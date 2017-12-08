@@ -158,6 +158,8 @@ var joueur = function(id, couleur, x, y) {
 var projectile = function(x, y, angle) {
 	
 	this.id = projectiles.length;
+	this.x_precedent = x;
+	this.y_precedent = y;
 	this.x = x;
 	this.y = y;
 	this.angle = angle;
@@ -166,6 +168,8 @@ var projectile = function(x, y, angle) {
 	this.diametre = diametreProjectile;
 	
 	this.trajectoire = function() {
+		this.x_precedent = this.x;
+		this.y_precedent = this.y;
 		this.x += Math.cos((this.angle-90)*(Math.PI/180)) * this.vitesse_deplacement;
 		this.y += Math.sin((this.angle-90)*(Math.PI/180)) * this.vitesse_deplacement;
 		this.test_collision();
@@ -190,7 +194,7 @@ var projectile = function(x, y, angle) {
 	
 	this.test_collision = function() {
 
-		var erreur = 5;
+		var erreur = 10;
 
 		for(var i = 0;i < map.length;i++){
 			
@@ -198,29 +202,80 @@ var projectile = function(x, y, angle) {
 				
 				var face = map[i].faces[j];
 				
-				if( /*(face.orientation === "vertical") &&*/ (this.x <= (face.debut["x"] + erreur)) && (this.x >= (face.debut["x"] - erreur)) && (this.y >= face.debut["y"] + erreur) && (this.y <= face.fin["y"] - erreur) ){
+				
+				//Ancien systeme de colision
+				//if( /*(face.orientation === "vertical") &&*/ (this.x <= (face.debut["x"] + erreur)) && (this.x >= (face.debut["x"] - erreur)) && (this.y >= face.debut["y"]) && (this.y <= face.fin["y"]) ){
+				//	
+				//	this.rebond(face.orientation);
+				//	
+				//	/*if(this.y > face.debut["y"]){
+				//		this.y = face.debut["y"] + 1;
+				//	}else if(this.y < face.debut["y"]){
+				//		this.y = face.debut["y"] - 1;
+				//	}*/
+				//	
+				//}
+				//
+				//if( /*(face.orientation === "horizontal") &&*/ (this.y <= (face.debut["y"] + erreur)) && (this.y >= (face.debut["y"] - erreur)) && (this.x >= face.debut["x"]) && (this.x <= face.fin["x"]) ){
+				//	
+				//	this.rebond(face.orientation);
+				//	
+				//	/*if(this.y > face.debut["y"]){
+				//		this.y = face.debut["y"] + 1;
+				//	}else if(this.y < face.debut["y"]){
+				//		this.y = face.debut["y"] - 1;
+				//	}*/
+				//	
+				//}
+				
+				if(face.orientation === "vertical"){
 					
-					this.rebond(face.orientation);
-					
-					/*if(this.y > face.debut["y"]){
-						this.y = face.debut["y"] + 1;
-					}else if(this.y < face.debut["y"]){
-						this.y = face.debut["y"] - 1;
-					}*/
+					if((this.y >= face.debut["y"]) && (this.y <= face.fin["y"])){
+						
+						if(this.x_precedent < face.debut["x"]){
+							
+							if(this.x >= face.debut["x"]){
+								this.x = face.debut["x"];
+								this.rebond(face.orientation);
+							}
+							
+						}else if(this.x_precedent > face.debut["x"]){
+							
+							if(this.x <= face.debut["x"]){
+								this.x = face.debut["x"];
+								this.rebond(face.orientation);
+							}
+							
+						}
+						
+					}
 					
 				}
 				
-				if( /*(face.orientation === "horizontal") &&*/ (this.y <= (face.debut["y"] + erreur)) && (this.y >= (face.debut["y"] - erreur)) && (this.x >= face.debut["x"] + erreur) && (this.x <= face.fin["x"] - erreur) ){
+				if(face.orientation === "horizontal"){
 					
-					this.rebond(face.orientation);
-					
-					/*if(this.y > face.debut["y"]){
-						this.y = face.debut["y"] + 1;
-					}else if(this.y < face.debut["y"]){
-						this.y = face.debut["y"] - 1;
-					}*/
+					if((this.x >= face.debut["x"]) && (this.x <= face.fin["x"])){
+						
+						if(this.y_precedent < face.debut["y"]){
+							
+							if(this.y >= face.debut["y"]){
+								this.y = face.debut["y"];
+								this.rebond(face.orientation);
+							}
+							
+						}else if(this.y_precedent > face.debut["y"]){
+							
+							if(this.y <= face.debut["y"]){
+								this.y = face.debut["y"];
+								this.rebond(face.orientation);
+							}
+							
+						}
+						
+					}
 					
 				}
+				
 				
 			}
 			
