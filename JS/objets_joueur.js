@@ -47,8 +47,8 @@ var joueur = function(id, couleur, x, y) {
 		var nouveau_y = this.y - Math.sin((this.angle-90)*(Math.PI/180)) * this.vitesse_deplacement;
 		
 		if(this.test_collision(nouveau_x, nouveau_y)){
-			this.x = nouveau_x;
-			this.y = nouveau_y;
+			this.x = Math.round(nouveau_x);
+			this.y = Math.round(nouveau_y);
 		}
 		
 	};
@@ -123,6 +123,58 @@ var joueur = function(id, couleur, x, y) {
 					
 				}*/
 				
+				/*for(var k = 0;k < coins_joueur.length;k++){
+					
+					if(face.orientation === "vertical"){
+						
+						if((this.y >= face.debut["y"]) && (this.y <= face.fin["y"])){
+							
+							if(this.x_precedent < face.debut["x"]){
+								
+								if(this.x >= face.debut["x"]){
+									this.x = face.debut["x"];
+									this.rebond(face.orientation);
+								}
+								
+							}else if(this.x_precedent > face.debut["x"]){
+								
+								if(this.x <= face.debut["x"]){
+									this.x = face.debut["x"];
+									this.rebond(face.orientation);
+								}
+								
+							}
+							
+						}
+						
+					}
+					
+					if(face.orientation === "horizontal"){
+						
+						if((this.x >= face.debut["x"]) && (this.x <= face.fin["x"])){
+							
+							if(this.y_precedent < face.debut["y"]){
+								
+								if(this.y >= face.debut["y"]){
+									this.y = face.debut["y"];
+									this.rebond(face.orientation);
+								}
+								
+							}else if(this.y_precedent > face.debut["y"]){
+								
+								if(this.y <= face.debut["y"]){
+									this.y = face.debut["y"];
+									this.rebond(face.orientation);
+								}
+								
+							}
+							
+						}
+						
+					}
+					
+				}*/
+				
 				
 				if( (face.orientation === "vertical") && (nouveau_x < (face.debut["x"] + 7)) && (nouveau_x > (face.debut["x"] - 7)) && (nouveau_y >= face.debut["y"]) && (nouveau_y <= face.fin["y"]) ){
 					
@@ -170,8 +222,8 @@ var projectile = function(x, y, angle) {
 	this.trajectoire = function() {
 		this.x_precedent = this.x;
 		this.y_precedent = this.y;
-		this.x += Math.cos((this.angle-90)*(Math.PI/180)) * this.vitesse_deplacement;
-		this.y += Math.sin((this.angle-90)*(Math.PI/180)) * this.vitesse_deplacement;
+		this.x += Math.round(Math.cos((this.angle-90)*(Math.PI/180)) * this.vitesse_deplacement);
+		this.y += Math.round(Math.sin((this.angle-90)*(Math.PI/180)) * this.vitesse_deplacement);
 		this.test_collision();
 	};
 	
@@ -192,10 +244,20 @@ var projectile = function(x, y, angle) {
 		
 	};
 	
+	this.test_collision_joueur = function() {
+		
+		for(var i = 0;i < joueurs.length;i++){
+			
+			
+			
+		}
+		
+	}
+	
 	this.test_collision = function() {
-
-		var erreur = 10;
-
+		
+		//var erreur = 10;
+		
 		for(var i = 0;i < map.length;i++){
 			
 			for(var j = 0;j < map[i].faces.length;j++){
@@ -235,14 +297,14 @@ var projectile = function(x, y, angle) {
 						if(this.x_precedent < face.debut["x"]){
 							
 							if(this.x >= face.debut["x"]){
-								this.x = face.debut["x"];
+								this.x = face.debut["x"] - 20;
 								this.rebond(face.orientation);
 							}
 							
 						}else if(this.x_precedent > face.debut["x"]){
 							
 							if(this.x <= face.debut["x"]){
-								this.x = face.debut["x"];
+								this.x = face.debut["x"] + 20;
 								this.rebond(face.orientation);
 							}
 							
@@ -259,14 +321,14 @@ var projectile = function(x, y, angle) {
 						if(this.y_precedent < face.debut["y"]){
 							
 							if(this.y >= face.debut["y"]){
-								this.y = face.debut["y"];
+								this.y = face.debut["y"] - 20;
 								this.rebond(face.orientation);
 							}
 							
 						}else if(this.y_precedent > face.debut["y"]){
 							
 							if(this.y <= face.debut["y"]){
-								this.y = face.debut["y"];
+								this.y = face.debut["y"] + 20;
 								this.rebond(face.orientation);
 							}
 							
@@ -275,7 +337,6 @@ var projectile = function(x, y, angle) {
 					}
 					
 				}
-				
 				
 			}
 			
