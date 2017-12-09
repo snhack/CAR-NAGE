@@ -199,7 +199,11 @@ var joueur = function(id, couleur, x, y) {
 	this.tir = function() {
 		
 		if(this.dernier_tir <= (Date.now() - (this.delai_tir * 1000))){
-			projectiles.push(new projectile(this.x, this.y, this.angle));
+			
+			var nouveau_x = this.x + Math.cos((this.angle-90)*(Math.PI/180)) * 50;
+			var nouveau_y = this.y + Math.sin((this.angle-90)*(Math.PI/180)) * 50;
+			
+			projectiles.push(new projectile(nouveau_x, nouveau_y, this.angle));
 			this.dernier_tir = Date.now();
 		}
 		
@@ -225,6 +229,7 @@ var projectile = function(x, y, angle) {
 		this.x += Math.round(Math.cos((this.angle-90)*(Math.PI/180)) * this.vitesse_deplacement);
 		this.y += Math.round(Math.sin((this.angle-90)*(Math.PI/180)) * this.vitesse_deplacement);
 		this.test_collision();
+		this.test_collision_joueur();
 	};
 	
 	this.rebond = function(sens) {
@@ -248,7 +253,24 @@ var projectile = function(x, y, angle) {
 		
 		for(var i = 0;i < joueurs.length;i++){
 			
+			var angles = joueurs[i].calcul_hitbox(false);
 			
+			var AMx = this.x - angles[0].x;
+			var AMy = this.y - angles[0].y;
+			var ABx = angles[1].x - angles[0].x;
+			var ABy = angles[1].y - angles[0].y;
+			var ADx = angles[3].x - angles[0].x;
+			var ADy = angles[3].y - angles[0].y;
+			
+			var AMdotAB = AMx * ABx + AMy * ABy;
+			var ABdotAB = ABx * ABx + ABy * ABy;
+			var AMdotAD = AMx * ADx + AMy * ADy;
+			var ADdotAD = ADx * ADx + ADy * ADy;
+			
+			if (0 < AMdotAB && AMdotAB < ABdotAB && 0 < AMdotAD && AMdotAD < ADdotAD) {
+				clearInterval(run);
+				alert("Joueur "+(i+1)+" Mort");
+			}
 			
 		}
 		
