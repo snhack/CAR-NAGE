@@ -34,7 +34,25 @@ function deplacements_joueurs(){
 
 
 function affichageJoueurs(){
+	
     for(var i = 0;i < joueurs.length;i++) {
+			
+			var img = new Image();
+			img.src = 'img/voiture'+(i+1)+'.png';
+			
+			context.save();
+			
+			context.setTransform(1, 0, 0, 1, 0, 0);
+			
+			context.translate(joueurs[i].x,joueurs[i].y);
+			
+			context.rotate(joueurs[i].angle*Math.PI/180);
+			
+			context.drawImage(img,-25,-50, 50, 100);
+			
+			context.restore();
+			
+            /*
             var coins = joueurs[i].calcul_hitbox(false);
             context.beginPath();
             context.lineWidth = 5;
@@ -48,7 +66,7 @@ function affichageJoueurs(){
             context.fill();
             context.lineJoin="bevel";
             context.stroke();
-
+			
             var canon = joueurs[i].calcul_hitbox(true);
             context.beginPath();
             var grd = context.createLinearGradient(canon[0].x, canon[0].y, canon[3].x, canon[3].y);
@@ -61,10 +79,9 @@ function affichageJoueurs(){
             context.lineTo(canon[3].x, canon[3].y);
             context.lineTo(canon[0].x, canon[0].y);
             context.fill();
-
-
-    }
-
+			*/
+	}
+	
 }
 
 function deplacements_projectiles(){
