@@ -17,6 +17,19 @@ devMap[4] = new Mur('vertical', prct(50,'x'), 0, prct(50,'y'));
 devMap[5] = new Mur('horizontal', 0, prct(25,'y'), prct(25,'x'));
 devMap[6] = new Mur('horizontal', prct(20,'x'), prct(70, 'y'), prct(80,'x'));
 
+/* Map de dev */
+
+var devMap2 = [];
+bordureMap(devMap2);
+
+devMap2[4] = new Mur('horizontal', prct(20,'x'), prct(20,'y'), prct(60,'x'));
+devMap2[5] = new Mur('vertical', prct(80,'x'), prct(20,'y'), prct(40,'y'));
+devMap2[6] = new Mur('vertical', prct(50,'x'), prct(40,'y'), prct(40,'y'));
+devMap2[7] = new Mur('horizontal', prct(20,'x'), prct(80,'y'), prct(30,'x'));
+
+
+
+
 /* Générateur de map aléatoire */
 
 /*

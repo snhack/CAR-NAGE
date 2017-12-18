@@ -9,7 +9,7 @@ document.getElementById("background").style.width = largeur+"px";
 
 var vitesse_deplacement_standard = 10;
 var vitesse_rotation_standard = 10;
-var delai_tir_standard = 0;
+var delai_tir_standard = 1;
 
 
 var largeur_joueur = 40;
@@ -38,16 +38,27 @@ function affichageMurs(array) {
 
 //Action des boutons
 document.getElementById('btnMapAlea').onclick = function () {
-    clearInterval(run);
     creationMapAleatoire();
-    run = window.setInterval(maj,25);
+    newGame();
 };
 document.getElementById('btnDevMap').onclick = function () {
-    clearInterval(run);
     map = devMap;
+    newGame();
+};
+document.getElementById('btnDevMap2').onclick = function () {
+    map = devMap2;
+    clearInterval(run);
+    projectiles = [];
+    touches = [];
+    joueurs[0].x = 700;
+    joueurs[0].y = 100;
+    joueurs[1].x = 100;
+    joueurs[1].y = 700;
     run = window.setInterval(maj,25);
 };
-
+document.getElementById('btnNewGame').onclick = function () {
+    newGame();
+};
 
 /* liste des codes des touche de jeu par defaut [joueur1,joueur2] */
 var touche_haut_standard = [38,90];
@@ -77,6 +88,16 @@ document.addEventListener("keyup", function(event){
 document.addEventListener("DOMContentLoaded", function() {
 	map = devMap;
 	joueurs = [creation_joueur('orange',300,300), creation_joueur('blue',600,300)];
-	run = window.setInterval(maj,25);
+	newGame();
 	
 });
+function newGame() {
+    clearInterval(run);
+    projectiles = [];
+    touches = [];
+    joueurs[0].x = 300;
+    joueurs[0].y = 300;
+    joueurs[1].x = 600;
+    joueurs[1].y = 300;
+    run = window.setInterval(maj,25);
+}

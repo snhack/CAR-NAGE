@@ -1,21 +1,38 @@
-#background, #map {
-	position: fixed;
-	top: 0;
-	left: 0;
+#background {
+    position: absolute;
+	left: 30%;
+    top: 10%;
+
 }
 
 
 #btnMapAlea {
     position: absolute;
-    top: 10px;
-    right: 25px;
-    width: 100px;
-    height: 30px;
+    top: 20%;
+    left: 80%;
+    width: 200px;
+    height: 50px;
     background-color: #55ff6c;
 }
 #btnDevMap {
     position: absolute;
     top: 50px;
+    right: 25px;
+    width: 100px;
+    height: 30px;
+    background-color: #ff0f00;
+}
+#btnNewGame{
+    position: absolute;
+    top: 100px;
+    right: 25px;
+    width: 100px;
+    height: 30px;
+    background-color: #fffe00;
+}
+#btnDevMap2 {
+    position: absolute;
+    top: 150px;
     right: 25px;
     width: 100px;
     height: 30px;
