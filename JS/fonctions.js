@@ -87,9 +87,9 @@ function affichageJoueurs(){
 function deplacements_projectiles(){
 
     for(var i = 0;i < projectiles.length;i++){
-
-    	projectiles[i].trajectoire();
-
+        if(projectiles[i] !== 'explosé') {
+            projectiles[i].trajectoire();
+        }
     }
 
 }

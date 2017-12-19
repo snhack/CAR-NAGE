@@ -271,7 +271,9 @@ var projectile = function(x, y, angle) {
 			if (0 < AMdotAB && AMdotAB < ABdotAB && 0 < AMdotAD && AMdotAD < ADdotAD && joueurs[i].status !== 'mort') {
                 explosion(joueurs[i].x,joueurs[i].y);
 				joueurs[i].status = 'mort';
-                projectiles.splice(this.id, 1);
+                projectiles.splice(this.id, 0, 'explosé');
+                projectiles.splice(this.id+1, 1);
+
 				setTimeout(function () {
                     clearInterval(run);
                     if (joueurs[0].status === 'mort' && joueurs[1].status !== 'mort') {
