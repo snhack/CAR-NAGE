@@ -2,7 +2,7 @@ var menuMap = [];
 var menuLoop;
 var nbAleaPilotLoop;
 var autoPilotLoop;
-var tempo = [];
+var tempo = [50,50];
 bordureMap(menuMap);
 
 function showMenu() {
