@@ -24,10 +24,21 @@ function showMenu() {
     autoPilotLoop = setInterval(autoPilot, 25);
 }
 function frameMenu() {
+	
     affichageMurs(menuMap);
     affichageJoueurs();
-    context.font = '50px Verdana';
-    context.fillText('CAR TROUBLE', 100, 300);
+    
+    //context.font = '50px Verdana';
+    //context.fillText('CarNage', 100, 300);
+    
+    var logo = new Image();
+    logo.src = 'img/logo.png';
+
+    context.save();
+    context.setTransform(1, 0, 0, 1, 0, 0);
+    context.drawImage(logo, 200, 200, 400, 400);
+    context.restore();
+    
     context.font = '20px Verdana';
     context.fillText(joueurs[0].score + '/' + joueurs[1].score, 50, 100);
 

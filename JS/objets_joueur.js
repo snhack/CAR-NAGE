@@ -4,7 +4,10 @@ var joueur = function(id, couleur, x, y) {
 	this.id = id;
 	this.x = x;
 	this.y = y;
+	/*this.x_precedent = x;
+	this.y_precedent = y;*/
 	this.angle = 0;
+	//this.angle_precedent = 0;
 	this.status = 'ok';
 	this.score = 0;
 	
@@ -22,13 +25,25 @@ var joueur = function(id, couleur, x, y) {
 
 	
 	this.rotation_gauche = function() {
-		this.angle -= this.vitesse_rotation;
-		this.reset_angle();
+		
+		var nouveau_angle = this.angle - this.vitesse_rotation;
+		
+		if(this.test_collision(this.x, this.y, nouveau_angle)){
+			this.angle = nouveau_angle;
+			this.reset_angle();
+		}
+		
 	};
 	
 	this.rotation_droite = function() {
-		this.angle += this.vitesse_rotation;
-		this.reset_angle();
+		
+		var nouveau_angle = this.angle + this.vitesse_rotation;
+		
+		if(this.test_collision(this.x, this.y, nouveau_angle)){
+			this.angle = nouveau_angle;
+			this.reset_angle();
+		}
+		
 	};
 	
 	this.avancer = function() {
@@ -36,7 +51,7 @@ var joueur = function(id, couleur, x, y) {
 		var nouveau_x = this.x + Math.cos((this.angle-90)*(Math.PI/180)) * this.vitesse_deplacement;
 		var nouveau_y = this.y + Math.sin((this.angle-90)*(Math.PI/180)) * this.vitesse_deplacement;
 		
-		if(this.test_collision(nouveau_x, nouveau_y)){
+		if(this.test_collision(nouveau_x, nouveau_y, this.angle)){
 			this.x = nouveau_x;
 			this.y = nouveau_y;
 		}
@@ -48,7 +63,7 @@ var joueur = function(id, couleur, x, y) {
 		var nouveau_x = this.x - Math.cos((this.angle-90)*(Math.PI/180)) * this.vitesse_deplacement;
 		var nouveau_y = this.y - Math.sin((this.angle-90)*(Math.PI/180)) * this.vitesse_deplacement;
 		
-		if(this.test_collision(nouveau_x, nouveau_y)){
+		if(this.test_collision(nouveau_x, nouveau_y, this.angle)){
 			this.x = Math.round(nouveau_x);
 			this.y = Math.round(nouveau_y);
 		}
@@ -65,16 +80,16 @@ var joueur = function(id, couleur, x, y) {
 		
 	};
 	
-	this.calcul_hitbox = function(canon) {
+	this.calcul_hitbox = function(x,y,angle) {
 		
-		var angle_reference = (this.angle - 90);
+		var angle_reference = (angle - 90);
 		var l = longueur_joueur;
 		var L = largeur_joueur;
 
-		if(canon === true) {
+		/*if(canon === true) {
             l = longueur_joueur/3;
             L = largeur_joueur/3;
-        }
+        }*/
 		
 		var angle_coin = (90 - (Math.atan((l / 2) / (L / 2)) * 180 / Math.PI));
 		var diagonale = Math.sqrt( Math.pow((l / 2), 2) + Math.pow((L / 2), 2) );
@@ -91,16 +106,18 @@ var joueur = function(id, couleur, x, y) {
 		
 		for(var i = 0;i < angles.length;i++){
             coins[i] = {};
-			coins[i].x = this.x + ( Math.cos(angles[i]) * diagonale );
-            coins[i].y = this.y + ( Math.sin(angles[i]) * diagonale );
+			coins[i].x = x + ( Math.cos(angles[i]) * diagonale );
+            coins[i].y = y + ( Math.sin(angles[i]) * diagonale );
 		}
 		
 		return coins;
 		
 	};
 	
-	this.test_collision = function(nouveau_x,nouveau_y) {
-
+	this.test_collision = function(nouveau_x, nouveau_y, nouveau_angle) {
+		
+		var coins_joueur = this.calcul_hitbox(this.x,this.y,this.angle);
+		var nouveau_coins_joueur = this.calcul_hitbox(nouveau_x, nouveau_y, nouveau_angle);
 		
 		for(var i = 0;i < map.length;i++){
 			
@@ -108,40 +125,22 @@ var joueur = function(id, couleur, x, y) {
 				
 				var face = map[i].faces[j];
 				
-				/*for(var k = 0;k < coins_joueur.length;k++){
-					
-					var espace = 2;
-					
-					if( (face.orientation === "vertical") && (coins_joueur[k]["x"] < (face.debut["x"] + espace)) && (coins_joueur[k]["x"] > (face.debut["x"] - espace)) && (coins_joueur[k]["y"] >= face.debut["y"]) && (coins_joueur[k]["y"] <= face.fin["y"]) ){
-						
-						return false;
-						
-					}else if( (face.orientation === "horizontal") && (coins_joueur[k]["y"] < (face.debut["y"] + espace)) && (coins_joueur[k]["y"] > (face.debut["y"] - espace)) && (coins_joueur[k]["x"] >= face.debut["x"]) && (coins_joueur[k]["x"] <= face.fin["x"]) ){
-						
-						return false;
-						
-					}
-					
-				}*/
-				
-				/*for(var k = 0;k < coins_joueur.length;k++){
+				for(var k = 0;k < coins_joueur.length;k++){
 					
 					if(face.orientation === "vertical"){
 						
-						if((this.y >= face.debut["y"]) && (this.y <= face.fin["y"])){
+						if((nouveau_coins_joueur[k]["y"] >= face.debut["y"]) && (nouveau_coins_joueur[k]["y"] <= face.fin["y"])){
 							
-							if(this.x_precedent < face.debut["x"]){
+							if(coins_joueur[k]["x"] < face.debut["x"]){
 								
-								if(this.x >= face.debut["x"]){
-									this.x = face.debut["x"];
-									this.rebond(face.orientation);
+								if(nouveau_coins_joueur[k]["x"] >= face.debut["x"]){
+									return false;
 								}
 								
-							}else if(this.x_precedent > face.debut["x"]){
+							}else if(coins_joueur[k]["x"] > face.debut["x"]){
 								
-								if(this.x <= face.debut["x"]){
-									this.x = face.debut["x"];
-									this.rebond(face.orientation);
+								if(nouveau_coins_joueur[k]["x"] <= face.debut["x"]){
+									return false;
 								}
 								
 							}
@@ -152,20 +151,18 @@ var joueur = function(id, couleur, x, y) {
 					
 					if(face.orientation === "horizontal"){
 						
-						if((this.x >= face.debut["x"]) && (this.x <= face.fin["x"])){
+						if((nouveau_coins_joueur[k]["x"] >= face.debut["x"]) && (nouveau_coins_joueur[k]["x"] <= face.fin["x"])){
 							
-							if(this.y_precedent < face.debut["y"]){
+							if(coins_joueur[k]["y"] < face.debut["y"]){
 								
-								if(this.y >= face.debut["y"]){
-									this.y = face.debut["y"];
-									this.rebond(face.orientation);
+								if(nouveau_coins_joueur[k]["y"] >= face.debut["y"]){
+									return false;
 								}
 								
-							}else if(this.y_precedent > face.debut["y"]){
+							}else if(coins_joueur[k]["y"] > face.debut["y"]){
 								
-								if(this.y <= face.debut["y"]){
-									this.y = face.debut["y"];
-									this.rebond(face.orientation);
+								if(nouveau_coins_joueur[k]["y"] <= face.debut["y"]){
+									return false;
 								}
 								
 							}
@@ -174,12 +171,10 @@ var joueur = function(id, couleur, x, y) {
 						
 					}
 					
-				}*/
+				}
 				
 				
-				if( (face.orientation === "vertical") && (nouveau_x < (face.debut["x"] + 7)) && (nouveau_x > (face.debut["x"] - 7)) && (nouveau_y >= face.debut["y"]) && (nouveau_y <= face.fin["y"]) ){
-					
-					
+				/*if( (face.orientation === "vertical") && (nouveau_x < (face.debut["x"] + 7)) && (nouveau_x > (face.debut["x"] - 7)) && (nouveau_y >= face.debut["y"]) && (nouveau_y <= face.fin["y"]) ){
 					
 					return false;
 					
@@ -187,7 +182,7 @@ var joueur = function(id, couleur, x, y) {
 					
 					return false;
 					
-				}
+				}*/
 				
 			}
 			
@@ -254,7 +249,7 @@ var projectile = function(x, y, angle) {
 		
 		for(var i = 0;i < joueurs.length;i++){
 			
-			var angles = joueurs[i].calcul_hitbox(false);
+			var angles = joueurs[i].calcul_hitbox(this.x,this.y,this.angle);
 			
 			var AMx = this.x - angles[0].x;
 			var AMy = this.y - angles[0].y;
