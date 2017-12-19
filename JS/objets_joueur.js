@@ -249,7 +249,7 @@ var projectile = function(x, y, angle) {
 		
 		for(var i = 0;i < joueurs.length;i++){
 			
-			var angles = joueurs[i].calcul_hitbox(this.x,this.y,this.angle);
+			var angles = joueurs[i].calcul_hitbox(joueurs[i].x,joueurs[i].y,joueurs[i].angle);
 			
 			var AMx = this.x - angles[0].x;
 			var AMy = this.y - angles[0].y;
