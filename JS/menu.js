@@ -28,6 +28,9 @@ function frameMenu() {
     affichageJoueurs();
     context.font = '50px Verdana';
     context.fillText('CAR TROUBLE', 100, 300);
+    context.font = '20px Verdana';
+    context.fillText(joueurs[0].score + '/' + joueurs[1].score, 50, 100);
+
 }
 function autoPilot() {
     for(var i = 0;i < joueurs.length;i++){

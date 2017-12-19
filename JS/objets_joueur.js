@@ -1,11 +1,12 @@
+
 var joueur = function(id, couleur, x, y) {
 	
 	this.id = id;
-    this.couleur = couleur;
 	this.x = x;
 	this.y = y;
 	this.angle = 0;
 	this.status = 'ok';
+	this.score = 0;
 	
 	this.vitesse_deplacement = vitesse_deplacement_standard;
 	this.vitesse_rotation = vitesse_deplacement_standard;
@@ -267,26 +268,20 @@ var projectile = function(x, y, angle) {
 			var AMdotAD = AMx * ADx + AMy * ADy;
 			var ADdotAD = ADx * ADx + ADy * ADy;
 			
-			if (0 < AMdotAB && AMdotAB < ABdotAB && 0 < AMdotAD && AMdotAD < ADdotAD) {
-
-                var img = new Image();
-                img.src = 'img/explosion.png';
-                context.save();
-                context.setTransform(1, 0, 0, 1, 0, 0);
-                context.translate(joueurs[i].x,joueurs[i].y);
-                context.drawImage(img,-100,-100, 200, 200);
-                context.restore();
+			if (0 < AMdotAB && AMdotAB < ABdotAB && 0 < AMdotAD && AMdotAD < ADdotAD && joueurs[i].status !== 'mort') {
+                explosion(joueurs[i].x,joueurs[i].y);
 				joueurs[i].status = 'mort';
+                projectiles.splice(this.id, 1);
 				setTimeout(function () {
                     clearInterval(run);
-                    showMenu();
-                    for(var i = 0; i < joueurs.length; i++){
-                        if (joueurs[0].status === 'mort' && joueurs[1].status !== 'mort') {
-                            joueurs[1].score += 1;
-                        } else if (joueurs[1].status === 'mort' && joueurs[0].status !== 'mort'){
-                            joueurs[0].score += 1;
-                        }
+                    if (joueurs[0].status === 'mort' && joueurs[1].status !== 'mort') {
+                        joueurs[1].score += 1;
+                        console.log('joueur 2 scored');
+                    } else if (joueurs[1].status === 'mort' && joueurs[0].status !== 'mort'){
+                        joueurs[0].score += 1;
+                        console.log('joueur 1 scored');
                     }
+                    showMenu();
                 }, 3000);
 
 			}
@@ -385,3 +380,17 @@ var projectile = function(x, y, angle) {
 		
 	};
 };
+
+function explosion(x,y) {
+    var test;
+    test = setInterval(function () {
+        var img = new Image();
+        img.src = 'img/explosion.png';
+        context.save();
+        context.setTransform(1, 0, 0, 1, 0, 0);
+        context.translate(x,y);
+        context.drawImage(img,-100,-100, 200, 200);
+        context.restore();
+    },10);
+    setTimeout(function(){clearInterval(test)}, 250);
+}
