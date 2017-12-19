@@ -319,14 +319,14 @@ var projectile = function(x, y, angle) {
 						if(this.x_precedent < face.debut["x"]){
 							
 							if(this.x >= face.debut["x"]){
-								this.x = face.debut["x"] - 20;
+								this.x = face.debut["x"] - 5;
 								this.rebond(face.orientation);
 							}
 							
 						}else if(this.x_precedent > face.debut["x"]){
 							
 							if(this.x <= face.debut["x"]){
-								this.x = face.debut["x"] + 20;
+								this.x = face.debut["x"] + 5;
 								this.rebond(face.orientation);
 							}
 							
@@ -343,14 +343,14 @@ var projectile = function(x, y, angle) {
 						if(this.y_precedent < face.debut["y"]){
 							
 							if(this.y >= face.debut["y"]){
-								this.y = face.debut["y"] - 20;
+								this.y = face.debut["y"] - 5;
 								this.rebond(face.orientation);
 							}
 							
 						}else if(this.y_precedent > face.debut["y"]){
 							
 							if(this.y <= face.debut["y"]){
-								this.y = face.debut["y"] + 20;
+								this.y = face.debut["y"] + 5;
 								this.rebond(face.orientation);
 							}
 							

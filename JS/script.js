@@ -47,19 +47,19 @@ document.getElementById('btnDevMap').onclick = function () {
 };
 document.getElementById('btnDevMap2').onclick = function () {
     map = devMap2;
-    clearInterval(run);
-    projectiles = [];
-    touches = [];
+    newGame();
     joueurs[0].x = 700;
     joueurs[0].y = 100;
     joueurs[1].x = 100;
     joueurs[1].y = 700;
-    run = window.setInterval(maj,25);
 };
 document.getElementById('btnNewGame').onclick = function () {
+    map = devMap;
     newGame();
 };
-
+document.getElementById('btnMenu').onclick = function () {
+    showMenu();
+};
 /* liste des codes des touche de jeu par defaut [joueur1,joueur2] */
 var touche_haut_standard = [38,90];
 var touche_bas_standard = [40,83];
@@ -85,19 +85,26 @@ document.addEventListener("keyup", function(event){
 }, false);
 
 /* Initialisation, a la fin du chargement du DOM */
-document.addEventListener("DOMContentLoaded", function() {
-	map = devMap;
-	joueurs = [creation_joueur('orange',300,300), creation_joueur('blue',600,300)];
-	newGame();
-	
-});
+
 function newGame() {
+    document.getElementById('btnNewGame').setAttribute('hidden', 'true');
+    clearInterval(menuLoop);
+    clearInterval(autoPilotLoop);
+    clearInterval(nbAleaPilotLoop);
     clearInterval(run);
     projectiles = [];
     touches = [];
+    joueurs[0].angle = 0;
     joueurs[0].x = 300;
     joueurs[0].y = 300;
+    joueurs[1].angle = 0;
     joueurs[1].x = 600;
     joueurs[1].y = 300;
     run = window.setInterval(maj,25);
 }
+document.addEventListener("DOMContentLoaded", function() {
+    map = devMap;
+    joueurs = [creation_joueur('orange',300,300), creation_joueur('blue',600,300)];
+    showMenu();
+
+});
