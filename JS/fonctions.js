@@ -36,22 +36,22 @@ function deplacements_joueurs(){
 function affichageJoueurs(){
 	
     for(var i = 0;i < joueurs.length;i++) {
-			
-			var img = new Image();
-			img.src = 'img/voiture'+(i+1)+'.png';
-			
-			context.save();
-			
-			context.setTransform(1, 0, 0, 1, 0, 0);
-			
-			context.translate(joueurs[i].x,joueurs[i].y);
-			
-			context.rotate(joueurs[i].angle*Math.PI/180);
-			
-			context.drawImage(img,-25,-50, 50, 100);
-			
-			context.restore();
-			
+			if(joueurs[i].status !== 'mort') {
+                var img = new Image();
+                img.src = 'img/voiture' + (i + 1) + '.png';
+
+                context.save();
+
+                context.setTransform(1, 0, 0, 1, 0, 0);
+
+                context.translate(joueurs[i].x, joueurs[i].y);
+
+                context.rotate(joueurs[i].angle * Math.PI / 180);
+
+                context.drawImage(img, -25, -50, 50, 100);
+
+                context.restore();
+            }
             /*
             var coins = joueurs[i].calcul_hitbox(false);
             context.beginPath();
@@ -97,10 +97,24 @@ function deplacements_projectiles(){
 
 function affichageProjectiles(){
     for(var i = 0; i < projectiles.length; i++) {
+    	/*
         context.beginPath();
         context.fillStyle = 'black';
         context.arc(projectiles[i].x, projectiles[i].y, projectiles[i].diametre, 0, 2 * Math.PI);
         context.fill();
+        */
+        var imgBall = new Image();
+        imgBall.src = 'img/ball.png';
+
+        context.save();
+
+        context.setTransform(1, 0, 0, 1, 0, 0);
+
+        context.translate(projectiles[i].x,projectiles[i].y);
+
+        context.drawImage(imgBall,-15,-15, 15, 15);
+
+        context.restore();
     }
 }
 

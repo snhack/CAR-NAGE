@@ -11,6 +11,10 @@ function showMenu() {
     clearInterval(nbAleaPilotLoop);
     clearInterval(run);
     document.getElementById('btnNewGame').removeAttribute('hidden');
+    joueurs[0].status = 'ok';
+    joueurs[1].status = 'ok';
+    joueurs[0].angle = 0;
+    joueurs[1].angle = 0;
     joueurs[0].x = 500;
     joueurs[0].y = 700;
     joueurs[1].x = 300;

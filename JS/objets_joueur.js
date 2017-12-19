@@ -5,6 +5,7 @@ var joueur = function(id, couleur, x, y) {
 	this.x = x;
 	this.y = y;
 	this.angle = 0;
+	this.status = 'ok';
 	
 	this.vitesse_deplacement = vitesse_deplacement_standard;
 	this.vitesse_rotation = vitesse_deplacement_standard;
@@ -98,8 +99,7 @@ var joueur = function(id, couleur, x, y) {
 	};
 	
 	this.test_collision = function(nouveau_x,nouveau_y) {
-		
-		var coins_joueur = this.calcul_hitbox(false);
+
 		
 		for(var i = 0;i < map.length;i++){
 			
@@ -268,13 +268,32 @@ var projectile = function(x, y, angle) {
 			var ADdotAD = ADx * ADx + ADy * ADy;
 			
 			if (0 < AMdotAB && AMdotAB < ABdotAB && 0 < AMdotAD && AMdotAD < ADdotAD) {
-				clearInterval(run);
-				alert("Joueur "+(i+1)+" Mort");
+
+                var img = new Image();
+                img.src = 'img/explosion.png';
+                context.save();
+                context.setTransform(1, 0, 0, 1, 0, 0);
+                context.translate(joueurs[i].x,joueurs[i].y);
+                context.drawImage(img,-100,-100, 200, 200);
+                context.restore();
+				joueurs[i].status = 'mort';
+				setTimeout(function () {
+                    clearInterval(run);
+                    showMenu();
+                    for(var i = 0; i < joueurs.length; i++){
+                        if (joueurs[0].status === 'mort' && joueurs[1].status !== 'mort') {
+                            joueurs[1].score += 1;
+                        } else if (joueurs[1].status === 'mort' && joueurs[0].status !== 'mort'){
+                            joueurs[0].score += 1;
+                        }
+                    }
+                }, 3000);
+
 			}
 			
 		}
 		
-	}
+	};
 	
 	this.test_collision = function() {
 		
