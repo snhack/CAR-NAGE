@@ -27,19 +27,21 @@ function frameMenu() {
 }
 function autoPilot() {
     for(var i = 0;i < joueurs.length;i++){
+        if(tempo[i] < 99) {
             joueurs[i].avancer();
-        if(tempo[i] > 99){
+        }
+        else {
             joueurs[i].reculer();
         }
-        if(tempo[i] < 20){
-            joueurs[i].rotation_gauche();
-        }
-        if(tempo[i] > 80){
+    }
+    for(var i = 0;i < joueurs.length;i++){
+        if(tempo[i] > 90) {
             joueurs[i].rotation_droite();
         }
-
+        else if(tempo[i] < 10){
+            joueurs[i].rotation_gauche();
+        }
     }
-
 }
 function nbAleaPilot() {
     for(var i = 0; i < joueurs.length; i++){
