@@ -3,7 +3,7 @@ var hauteur = 800;
 var largeur = 800;
 var map = [];
 var run;
-
+var son = document.getElementById('son');
 document.getElementById("background").style.height = hauteur+"px";
 document.getElementById("background").style.width = largeur+"px";
 

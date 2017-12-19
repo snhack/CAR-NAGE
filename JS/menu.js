@@ -44,19 +44,17 @@ function frameMenu() {
 
 }
 function autoPilot() {
-    for(var i = 0;i < joueurs.length;i++){
-        if(tempo[i] < 99) {
+    for (var i = 0; i < joueurs.length; i++) {
+        if (tempo[i] < 99) {
             joueurs[i].avancer();
         }
         else {
             joueurs[i].reculer();
         }
-    }
-    for(var i = 0;i < joueurs.length;i++){
-        if(tempo[i] > 90) {
+        if (tempo[i] > 90) {
             joueurs[i].rotation_droite();
         }
-        else if(tempo[i] < 10){
+        else if (tempo[i] < 10) {
             joueurs[i].rotation_gauche();
         }
     }

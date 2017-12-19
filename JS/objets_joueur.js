@@ -378,16 +378,3 @@ var projectile = function(x, y, angle) {
 	};
 };
 
-function explosion(x,y) {
-    var test;
-    test = setInterval(function () {
-        var img = new Image();
-        img.src = 'img/explosion.png';
-        context.save();
-        context.setTransform(1, 0, 0, 1, 0, 0);
-        context.translate(x,y);
-        context.drawImage(img,-100,-100, 200, 200);
-        context.restore();
-    },10);
-    setTimeout(function(){clearInterval(test)}, 250);
-}
