@@ -1,1 +1,1 @@
-# tank
+Mini-jeu de duel, en 2D, très axé sur la stratégie. Le but étant de détruire l’adversaire par des tirs précis, le tout dans un labyrinthe. Mais, contrairement à un jeu classique, on ne peut tirer qu’un seul projectile à la fois, il faut attendre que ce dernier disparaisse au bout d’une dizaine de secondes, et durant ce laps de temps, le projectile rebondit sur toutes les parois du labyrinthe. Ce système privilégie donc la stratégie et le calcul des trajectoires (un peu comme pour le billard).
