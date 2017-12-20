@@ -1,3 +1,7 @@
+body {
+    background: url("../img/background.jpg");
+}
+
 #background {
     position: absolute;
 	margin: auto;
