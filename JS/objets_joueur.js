@@ -194,7 +194,7 @@ var joueur = function(id, couleur, x, y) {
 	
 	this.tir = function() {
 		
-		if(this.dernier_tir <= (Date.now() - (this.delai_tir * 1000))){
+		if(this.dernier_tir <= (Date.now() - (this.delai_tir * 1000)) && this.status !== 'mort'){
 			
 			var nouveau_x = this.x + Math.cos((this.angle-90)*(Math.PI/180)) * 50;
 			var nouveau_y = this.y + Math.sin((this.angle-90)*(Math.PI/180)) * 50;
